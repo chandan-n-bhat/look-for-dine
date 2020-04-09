@@ -79,10 +79,14 @@ def signup(request):
 
 def getUsers(request):
 
-    username = request.GET.get('username')
+    username = request.GET['username']
     users = User.objects.all().values_list('username',flat=True)
 
     users = list(users)
+    # print(users)
+    # print(username)
+
+    # return JsonResponse({'availability':username})s
     # return JsonResponse({'a':users},safe=False)
 
     if(username in users):

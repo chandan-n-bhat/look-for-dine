@@ -1,101 +1,65 @@
-<!DOCTYPE html>
-{% load static %}
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+{% extends "user_auth/auth_base.html" %}
+
+{% block title %}
     <title>Signup</title>
+{% endblock %}
 
-    <link rel="icon" type="image/png" href='{% static "user_auth/images/icons/favicon.ico" %}'/>
-    <link rel="stylesheet" type="text/css" href='{% static "user_auth/vendor/bootstrap/css/bootstrap.min.css" %}'>
-	<link rel="stylesheet" type="text/css" href='{% static "user_auth/fonts/font-awesome-4.7.0/css/font-awesome.min.css" %}'>
-	<link rel="stylesheet" type="text/css" href='{% static "user_auth/fonts/Linearicons-Free-v1.0.0/icon-font.min.css" %}'>
-	<link rel="stylesheet" type="text/css" href='{% static "user_auth/vendor/animate/animate.css" %}'>
-	<link rel="stylesheet" type="text/css" href='{% static "user_auth/vendor/css-hamburgers/hamburgers.min.css" %}'>
-	<link rel="stylesheet" type="text/css" href='{% static "user_auth/vendor/animsition/css/animsition.min.css" %}'>
-	<link rel="stylesheet" type="text/css" href='{% static "user_auth/vendor/select2/select2.min.css" %}'>
-	<link rel="stylesheet" type="text/css" href='{% static "user_auth/vendor/daterangepicker/daterangepicker.css" %}'>
+{% block formblock %}
 
-    <link rel="stylesheet" type="text/css" href='{% static "user_auth/css/util.css" %}'>
-    <link rel="stylesheet" type="text/css" href='{% static "user_auth/css/main.css" %}'>
+    <form class="login100-form validate-form" method="POST" enctype="multipart/form-data">
+        {% csrf_token %}
+        {% if registered %}
 
-    <style>
-        #side-image{
-            background-image: url('{% static "user_auth/images/bg2.jpg" %}');
-        }
-    </style>
-
-</head>
-<body style="background-color: #666666;">
-
-    <div class="limiter">
-        <div class="container-login100">
-            <div class="wrap-login100">
-                <form class="login100-form validate-form" method="POST" enctype="multipart/form-data">
-                    {% csrf_token %}
-                    {% if registered %}
-
-                    <div class="container-login100-form-btn">
-                        <button class="login100-form-btn">Successfully Registered!</button>
-                    </div>
-                        
-                    <div class="text-center p-t-46 p-b-20">
-                        <a href="{% url 'user_auth:login' %}"><span style="font-size: 15px;">Login to Continue</span></a>
-                    </div>
-
-                    {% else %}
-                    <span class="login100-form-title p-b-43">Signup</span>
-                     
-                    <div class="wrap-input100 validate-input" data-validate = "Valid username is required">
-                        <!-- <input class="input100" type="text" name="uname" id="username" onblur="obj.checkUnameAvailable()"> -->
-                        {{ user_form.username }}
-                        <span class="focus-input100"></span>
-                        <span class="label-input100">Username</span>
-                    </div>
-                        
-                    <div class="wrap-input100 validate-input" data-validate="Password is required">
-                        <!-- <input class="input100" type="password" name="pass"> -->
-                        {{ user_form.password }}
-                        <span class="focus-input100"></span>
-                        <span class="label-input100">Password</span>
-                    </div>
-                    
-                    <div class="wrap-input100 validate-input" data-validate="Email is required">
-                        {{ profile_form.email }}
-                        <span class="focus-input100"></span>
-                        <span class="label-input100">Email</span>
-                    </div>
-                
-                    <div class="container-login100-form-btn">
-                        <button class="login100-form-btn">Signup</button>
-                    </div>
-                        
-                    <div class="text-center p-t-46 p-b-20">
-                        <a href="{% url 'user_auth:login' %}"><span style="font-size: 15px;">Back to Login</span></a>
-                    </div>
-
-                    {% endif %}
-                </form>
-          
-    
-                <div class="login100-more" id="side-image">
-                </div>
-            </div>
+        <div class="container-login100-form-btn">
+            <button class="login100-form-btn" disabled>Successfully Registered!</button>
         </div>
-    </div>
+                
+        <div class="text-center p-t-46 p-b-20">
+            <a href="{% url 'user_auth:login' %}"><span style="font-size: 15px;">Login to Continue</span></a>
+        </div>
 
-    <script src='{% static "user_auth/vendor/jquery/jquery-3.2.1.min.js" %}'></script>
-	<script src='{% static "user_auth/vendor/animsition/js/animsition.min.js" %}'></script>
-	<script src='{% static "user_auth/vendor/bootstrap/js/popper.js" %}'></script>
-	<script src='{% static "user_auth/vendor/bootstrap/js/bootstrap.min.js" %}'></script>
-	<script src='{% static "user_auth/vendor/select2/select2.min.js" %}'></script>
-	<script src='{% static "user_auth/vendor/daterangepicker/moment.min.js" %}'></script>
-	<script src='{% static "user_auth/vendor/daterangepicker/daterangepicker.js" %}'></script>
-	<script src='{% static "user_auth/vendor/countdowntime/countdowntime.js" %}'></script>
-    <script src='{% static "user_auth/js/main.js" %}'></script>
+        {% else %}
+        <span class="login100-form-title p-b-43">Signup</span>
+        
+        <div class="wrap-input100 validate-input" data-validate = "Valid username is required">
+            <!-- <input class="input100" type="text" name="uname" id="username" onblur="obj.checkUnameAvailable()"> -->
+            {{ user_form.username }}
+            <span class="focus-input100"></span>
+            <span class="label-input100">Username</span>
+        </div>
+            
+        <div class="wrap-input100 validate-input" data-validate="Password is required">
+            <!-- <input class="input100" type="password" name="pass"> -->
+            {{ user_form.password }}
+            <span class="focus-input100"></span>
+            <span class="label-input100">Password</span>
+        </div>
+        
+        <div class="wrap-input100 validate-input" data-validate="Email is required">
+            {{ profile_form.email }}
+            <span class="focus-input100"></span>
+            <span class="label-input100">Email</span>
+        </div>
+
+        <div class="container-login100-form-btn">
+            <button class="login100-form-btn">Signup</button>
+        </div>
+            
+        <div class="text-center p-t-46 p-b-20">
+            <a href="{% url 'user_auth:login' %}"><span style="font-size: 15px;">Back to Login</span></a>
+        </div>
+
+        {% endif %}
+    </form>
+
+{% endblock %}
+
+
+{% block ajax %}
     
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
     <script type="text/javascript">
-    
+        
         var obj = {
             xhr: new XMLHttpRequest(),
 
@@ -105,22 +69,24 @@
 
                 this.xhr.onreadystatechange = this.showDetail;
 
-                this.xhr.open("GET","{% url 'user_auth:getUsers' %}"+"?username="+username,true);
+                this.xhr.open("GET","{% url 'user_auth:getUsers' %}"+"?username="+usernameField,true);
                 // console.log("{% url 'user_auth:getUsers' %}"+"?username="+usernameField);
 
                 this.xhr.send();
-                console.log("Done");
+                // console.log("Done");
             },
 
             showDetail: function(){
                 if(this.status == 200 && this.readyState == 4){
-                    console.log(this.responseText);
+                    // console.log(this.responseText);
+                    var json_response = JSON.parse(this.responseText);
+
+                    if(json_response.availability != "true"){
+                        swal("Oops!", "This Username is not available!", "error");
+                    }
                 }
             }
-
         }
 
     </script>
-
-</body>
-</html>
+{% endblock %}

@@ -1,0 +1,91 @@
+{% extends 'home/home_base.html' %}
+{% load static %}
+
+{% block title %}
+	<title>Home</title>
+{% endblock %}
+
+{% block content %}
+	<header class="w3-display-container w3-content w3-wide" style="max-width:1600px;min-width:500px" id="home">
+		<img class="w3-image" src="{% static 'home/images/hamburger.jpg' %}" alt="Hamburger Catering" width="1600" height="800">
+		<div class="w3-display-bottomleft w3-padding-large w3-opacity">
+			<h1 class="w3-xxlarge">Paradise</h1>
+		</div>
+	</header>
+
+	<div class="w3-content" style="max-width:1100px">
+
+		<!-- About Section -->
+		<div class="w3-row w3-padding-64" id="about">
+			<div class="w3-col m6 w3-padding-large w3-hide-small">
+				<img src="{% static 'home/images/tablesetting2.jpg' %}" class="w3-round w3-image w3-opacity-min" alt="Table Setting" width="600" height="750">
+			</div>
+
+			<div class="w3-col m6 w3-padding-large">
+				<h1 class="w3-center">About {{ about.name }}</h1><br>
+				<h5 class="w3-center">Tradition since {{ about.founded }}</h5>
+				<p class="w3-large">{{ about.description }}</p>
+			</div>
+		</div>
+
+		<hr>
+
+		<!-- Our Branches Section -->
+		<div class="w3-row w3-padding-64" id="branches">
+			<div class="w3-col l6 w3-padding-large">
+				<h1 class="w3-center">Our Branches</h1><br>
+				
+				{% if branches %}
+
+					{% for branch in branches %}
+						<h4>{{ branch.address }}</h4>
+						<p class="w3-text-grey">{{ branch.city }}, {{ branch.state }}</p>
+						<p class="w3-text-grey"><strong>Manager :</strong> {{ branch.manager }}<span class="w3-text-grey contact" style="float: right;"><strong>Contact :</strong> {{ branch.contact }}</span></p>
+						<hr>
+					{% endfor %}
+
+				{% endif %}
+
+			</div>
+			
+			<div class="w3-col l6 w3-padding-large">
+				<img src="{% static 'home/images/tablesetting.jpg' %}" class="w3-round w3-image w3-opacity-min" alt="Menu" style="width:100%">
+			</div>
+		</div>
+
+		<hr>
+
+		<!-- Our Speciality Menu Section -->
+		<div class="w3-row w3-padding-64" id="specials">
+			
+			<div class="w3-col l6 w3-padding-large">
+				<img src="{% static 'home/images/tablesetting.jpg' %}" class="w3-round w3-image w3-opacity-min" alt="Menu" style="width:100%">
+			</div>
+			
+			<div class="w3-col l6 w3-padding-large">
+				<h1 class="w3-center">Our Speciality Menu</h1><br>
+				
+				{% if specials %}
+					{% for special in specials %}
+						<h4> {{ special.cuisineName }} </h4>
+						<p class="w3-text-grey">{{ special.description }}</p><br>
+					{% endfor %}
+				{% endif %}
+
+			</div>
+			
+		</div>
+
+		<hr>
+
+		<!-- Contact Section -->
+		<div class="w3-container w3-padding-64" id="contact">
+			<h1>Contact</h1><br>
+			<p style="font-size: 18px;margin-top: 0px;">We offer the best cuisine to our customers. We understand your needs and we will cater the food to satisfy the biggest criteria of them all, both look and taste. Do not hesitate to contact us.</p>
+			<p class="w3-text-blue-grey w3-large"><b>Paradise Rajajinagar, Bangalore, Karnataka</b></p>
+			<p>You can  contact us by phone &nbsp;<strong>9876543210</strong>&nbsp; or email &nbsp;<strong>supportparadise@gmail.com</strong></p>
+		</div>
+
+		<!-- End page content -->
+	</div>
+{% endblock %}

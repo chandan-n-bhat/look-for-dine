@@ -1,101 +1,65 @@
-<!DOCTYPE html>
-{% load static %}
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+{% extends "user_auth/auth_base.html" %}
+
+
+{% block title %}
     <title>Login</title>
+{% endblock %}
 
-    <link rel="icon" type="image/png" href='{% static "user_auth/images/icons/favicon.ico" %}'/>
-    <link rel="stylesheet" type="text/css" href='{% static "user_auth/vendor/bootstrap/css/bootstrap.min.css" %}'>
-	<link rel="stylesheet" type="text/css" href='{% static "user_auth/fonts/font-awesome-4.7.0/css/font-awesome.min.css" %}'>
-	<link rel="stylesheet" type="text/css" href='{% static "user_auth/fonts/Linearicons-Free-v1.0.0/icon-font.min.css" %}'>
-	<link rel="stylesheet" type="text/css" href='{% static "user_auth/vendor/animate/animate.css" %}'>
-	<link rel="stylesheet" type="text/css" href='{% static "user_auth/vendor/css-hamburgers/hamburgers.min.css" %}'>
-	<link rel="stylesheet" type="text/css" href='{% static "user_auth/vendor/animsition/css/animsition.min.css" %}'>
-	<link rel="stylesheet" type="text/css" href='{% static "user_auth/vendor/select2/select2.min.css" %}'>
-	<link rel="stylesheet" type="text/css" href='{% static "user_auth/vendor/daterangepicker/daterangepicker.css" %}'>
 
-    <link rel="stylesheet" type="text/css" href='{% static "user_auth/css/util.css" %}'>
-    <link rel="stylesheet" type="text/css" href='{% static "user_auth/css/main.css" %}'>
+{% block formblock %}
 
-    <style>
-        #side-image{
-            background-image: url('{% static "user_auth/images/bg2.jpg" %}');
-        }
-    </style>
+    <form class="login100-form validate-form" action="{% url 'user_auth:login' %}" method="POST" enctype="multipart/form-data">
+        {% csrf_token %}
+        
+        {% if user.is_authenticated %}
 
-</head>
-<body style="background-color: #666666;">
+        <div class="text-center p-t-46 p-b-20">
+            <p><span style="font-size: 20px;">Logged In successfully as {{ user.username }}</span></p>
+        </div>
 
-    <div class="limiter">
-        <div class="container-login100">
-            <div class="wrap-login100">
-                <form class="login100-form validate-form" action="{% url 'user_auth:login' %}" method="POST" enctype="multipart/form-data">
-                    {% csrf_token %}
-                    
-                    {% if user.is_authenticated %}
+        <div class="container-login100-form-btn">
+            <a href="{% url 'user_auth:logout' %}"><button class="login100-form-btn">Logout</button></a>
+        </div>
 
-                    <div class="container-login100-form-btn">
-                        <button class="login100-form-btn">Logged In successfully as {{ user.username }}</button>
-                    </div>
+        <div class="text-center p-t-46 p-b-20">
+            <a href="{% url 'menu:menu' %}"><span style="font-size: 15px;">Click here to Continue</span></a>
+        </div>
 
-                    <div class="text-center p-t-46 p-b-20">
-                        <a href="{% url 'menu:menu' %}"><span style="font-size: 15px;">Click here to Continue</span></a>
-                    </div>
+        {% else %}
 
-                    {% else %}
+        <span class="login100-form-title p-b-43">Logins to continue</span>
+            
+        <div class="wrap-input100 validate-input" data-validate = "Valid username is required">
+            <input class="input100" type="text" name="username">
+            <span class="focus-input100"></span>
+            <span class="label-input100">Username</span>
+        </div>
+            
+        <div class="wrap-input100 validate-input" data-validate="Password is required">
+            <input class="input100" type="password" name="pass">
+            <span class="focus-input100"></span>
+            <span class="label-input100">Password</span>
+        </div>
 
-                    <span class="login100-form-title p-b-43">Login to continue</span>
-                        
-                    <div class="wrap-input100 validate-input" data-validate = "Valid username is required">
-                        <input class="input100" type="text" name="username">
-                        <span class="focus-input100"></span>
-                        <span class="label-input100">Username</span>
-                    </div>
-                        
-                    <div class="wrap-input100 validate-input" data-validate="Password is required">
-                        <input class="input100" type="password" name="pass">
-                        <span class="focus-input100"></span>
-                        <span class="label-input100">Password</span>
-                    </div>
-    
-                    <div class="flex-sb-m w-full p-t-3 p-b-32">
-                        <div class="contact100-form-checkbox">
-                            <input class="input-checkbox100" id="ckb1" type="checkbox" name="remember-me">
-                            <label class="label-checkbox100" for="ckb1">Remember me</label>
-                        </div>
+        <div class="flex-sb-m w-full p-t-3 p-b-32">
+            <div class="contact100-form-checkbox">
+                <input class="input-checkbox100" id="ckb1" type="checkbox" name="remember-me">
+                <label class="label-checkbox100" for="ckb1">Remember me</label>
+            </div>
 
-                        <div>
-                            <a href="#" class="txt1">Forgot Password?</a>
-                        </div>
-                    </div>
-                
-                    <div class="container-login100-form-btn">
-                        <button class="login100-form-btn">Login</button>
-                    </div>
-                        
-                    <div class="text-center p-t-46 p-b-20">
-                        <a href="{% url 'user_auth:signup' %}"><span style="font-size: 15px;">Click here to Signup</span></a>
-                    </div>
-                    {% endif %}
-                </form>
-    
-                <div class="login100-more" id="side-image">
-                </div>
+            <div>
+                <a href="#" class="txt1">Forgot Password?</a>
             </div>
         </div>
-    </div>
 
-    <script src='{% static "user_auth/vendor/jquery/jquery-3.2.1.min.js" %}'></script>
-	<script src='{% static "user_auth/vendor/animsition/js/animsition.min.js" %}'></script>
-	<script src='{% static "user_auth/vendor/bootstrap/js/popper.js" %}'></script>
-	<script src='{% static "user_auth/vendor/bootstrap/js/bootstrap.min.js" %}'></script>
-	<script src='{% static "user_auth/vendor/select2/select2.min.js" %}'></script>
-	<script src='{% static "user_auth/vendor/daterangepicker/moment.min.js" %}'></script>
-	<script src='{% static "user_auth/vendor/daterangepicker/daterangepicker.js" %}'></script>
-	<script src='{% static "user_auth/vendor/countdowntime/countdowntime.js" %}'></script>
-	<script src='{% static "user_auth/js/main.js" %}'></script>
+        <div class="container-login100-form-btn">
+            <button class="login100-form-btn">Login</button>
+        </div>
+            
+        <div class="text-center p-t-46 p-b-20">
+            <a href="{% url 'user_auth:signup' %}"><span style="font-size: 15px;">Click here to Signup</span></a>
+        </div>
+        {% endif %}
+    </form>
 
-</body>
-</html>
+{% endblock %}

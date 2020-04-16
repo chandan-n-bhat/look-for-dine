@@ -6,4 +6,5 @@ app_name = 'home'
 urlpatterns = [
     path('', home_views.redirectHome, name='redirectToHome'),
     path('home/', home_views.homePage, name='home'),
+    path('personalise/', home_views.personalise, name='personalise')
 ]

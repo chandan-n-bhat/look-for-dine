@@ -1,0 +1,96 @@
+{% extends 'home/home_base.html' %}
+{% load static %}
+
+{% block title %}
+	<title>Personalise</title>
+
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
+	
+	<style>
+
+		.jumbotron{
+			margin-top: 20px;
+		}
+
+		html,body{
+			height: 100%;
+		}
+		
+	</style>
+{% endblock %}
+
+
+{% block content %}
+
+	<div class="jumbotron text-center">
+		<h1>Few Questions to Personalise the Menu!</h1>
+		<p>We will try to recommend the best cuisine according to your taste</p>
+	</div>
+
+	<div class="container mt-3">
+		<div class="row">
+			<div class="col">
+
+				<form method='POST' action="{% url 'home:personalise' %}">
+					{% csrf_token %}
+	
+					<div class="form-group">
+						<label for="calorielimit"><h4>Are you Diet Consious?? Tell us your Limit!</h4></label>
+							<input type="text" class="form-control" id="calorielimit" name="calorielimit" style="width: 50%;" placeholder="Enter calories (Approx) Eg: 200">
+					</div>
+					<br>
+		
+					<h4>What do you prefer, North Indian or South Indian</h4>
+					<div class="custom-control custom-radio custom-control-inline">
+						<input type="radio" id="north" class="custom-control-input" name="cuisineType" value="north">
+						<label class="custom-control-label" for="north">North Indian</label>
+					</div>
+		
+					<div class="custom-control custom-radio custom-control-inline">
+						<input type="radio" id="south" class="custom-control-input" name="cuisineType" value="south">
+						<label class="custom-control-label" for="south">South Indian</label>
+					</div>
+					<br>
+					<br>
+					
+					<div class="form-group">
+						<label for="time"><h4>How much time do you have?</h4></label>
+						<input type="text" class="form-control" id="time" name="time" style="width: 30%;" placeholder="Eg: 20 (in mins)">
+					</div>
+					<br>
+		
+					<div class="form-group">
+						<label for="budget"><h4>Whats your budget!</h4></label>
+						<input type="text" class="form-control" id="budget" name="budget" style="width: 30%;" placeholder="Eg: 70 (in Rs)">
+					</div>
+					<br>
+					
+					<h4>What do you prefer, Veg or Non-Veg</h4>
+					<div class="custom-control custom-radio custom-control-inline">
+						<input type="radio" id="veg" class="custom-control-input" name="vnv" value="veg">
+						<label class="custom-control-label" for="veg"> Veg </label>
+					</div>
+		
+					<div class="custom-control custom-radio custom-control-inline">
+						<input type="radio" id="nonveg" class="custom-control-input" name="vnv" value="nonveg">
+						<label class="custom-control-label" for="nonveg"> Non-Veg </label>
+					</div>
+					<br>
+					<br>
+		
+					<button type="submit" class="btn btn-primary">Submit</button>
+				</form>
+			</div>
+			
+			<div class="col" >
+				<img src="{% static 'home/images/tablesetting4.jpg' %}" style="height:80%;float:right;display:block;">
+			</div>
+
+		</div>
+	</div>
+			
+		
+{% endblock %}

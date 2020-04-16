@@ -19,6 +19,7 @@ class Branch(models.Model):
     state = models.CharField(max_length=20)
     contact = models.CharField(max_length=10)
     image = models.CharField(max_length=200)
+    # image = models.ImageField(upload_to='branches')
 
     def __str__(self):
         return self.address + ', ' + self.city + ', ' + self.state 

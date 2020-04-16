@@ -3,6 +3,25 @@
 
 {% block title %}
 	<title>Home</title>
+	<style>
+		html{
+			scroll-behavior: smooth;
+		}
+
+		.map{
+			display: none;
+			padding: 0 10px 0 10px;
+		}
+
+		#aboutImage{
+			display: none;
+		}
+	</style>
+
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
+
 {% endblock %}
 
 {% block content %}
@@ -18,7 +37,8 @@
 		<!-- About Section -->
 		<div class="w3-row w3-padding-64" id="about">
 			<div class="w3-col m6 w3-padding-large w3-hide-small">
-				<img src="{% static 'home/images/tablesetting2.jpg' %}" class="w3-round w3-image w3-opacity-min" alt="Table Setting" width="600" height="750">
+				<img src="" id="aboutImage" class="w3-round w3-image w3-opacity-min spinner-border" width="600" height="750">
+				<!-- <img src="{% static 'home/images/tablesetting2.jpg' %}" class="w3-round w3-image w3-opacity-min" alt="Table Setting" width="600" height="750"> -->
 			</div>
 
 			<div class="w3-col m6 w3-padding-large">
@@ -38,10 +58,12 @@
 				{% if branches %}
 
 					{% for branch in branches %}
-						<h4>{{ branch.address }}</h4>
-						<p class="w3-text-grey">{{ branch.city }}, {{ branch.state }}</p>
-						<p class="w3-text-grey"><strong>Manager :</strong> {{ branch.manager }}<span class="w3-text-grey contact" style="float: right;"><strong>Contact :</strong> {{ branch.contact }}</span></p>
-						<hr>
+						<div id="{{ branch.id }}" class="branch">
+							<h4>{{ branch.address }}</h4>
+							<p class="w3-text-grey">{{ branch.city }}, {{ branch.state }}</p>
+							<p class="w3-text-grey"><strong>Manager :</strong> {{ branch.manager }}<span class="w3-text-grey contact" style="float: right;"><strong>Contact :</strong> {{ branch.contact }}</span></p>
+						</div>
+					<hr>
 					{% endfor %}
 
 				{% endif %}
@@ -49,7 +71,30 @@
 			</div>
 			
 			<div class="w3-col l6 w3-padding-large">
-				<img src="{% static 'home/images/tablesetting.jpg' %}" class="w3-round w3-image w3-opacity-min" alt="Menu" style="width:100%">
+				
+				{% with branches|first as branchImage %}
+				
+				<img src="" id="branchImage" class="w3-round w3-image w3-opacity-min" alt="Menu" style="width:100%">
+
+				{% endwith %}
+				
+				<!-- {% with branches|first as branchImage %}
+				
+				<img src= id="branchImage" class="w3-round w3-image w3-opacity-min" alt="Menu" style="width:100%">
+
+				{% endwith %} -->
+			</div>
+		</div>
+
+		<div class="w3-row" id="map">
+			<div class="w3-col l4 m3 map">
+				<iframe src="" width="100%" height="400px" frameborder="0" style="border:0;" allowfullscreen="" aria-hidden="false" tabindex="0"></iframe>
+			</div>
+			<div class="w3-col l4 m3 map">
+				<iframe src="" width="100%" height="400px" frameborder="0" style="border:0;" allowfullscreen=""  aria-hidden="false" tabindex="0"></iframe>
+			</div>
+			<div class="w3-col l4 m3 map">
+				<iframe src="" width="100%" height="400px" frameborder="0" style="border:0;" allowfullscreen=""  aria-hidden="false" tabindex="0"></iframe>
 			</div>
 		</div>
 
@@ -59,7 +104,7 @@
 		<div class="w3-row w3-padding-64" id="specials">
 			
 			<div class="w3-col l6 w3-padding-large">
-				<img src="{% static 'home/images/tablesetting.jpg' %}" class="w3-round w3-image w3-opacity-min" alt="Menu" style="width:100%">
+				<img src="" id="specialImg" class="w3-round w3-image w3-opacity-min" style="width:100%">
 			</div>
 			
 			<div class="w3-col l6 w3-padding-large">
@@ -73,7 +118,6 @@
 				{% endif %}
 
 			</div>
-			
 		</div>
 
 		<hr>
@@ -88,4 +132,99 @@
 
 		<!-- End page content -->
 	</div>
+{% endblock %}
+
+{% block ajax %}
+
+	<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+
+	<script type="text/javascript">
+
+		$(document).ready(function(){
+			$('.branch').click(function(){
+		    	var id = $(this).attr('id');
+				console.log(id);
+
+				$.ajax({
+					url: '{% url "rest_api:change" %}',
+					data: {
+					"id": id,
+					"app":"home",
+					"model":"Branch"
+					},
+					dataType: 'json',
+					success: function (data) {
+						if (data.imageUrl) {
+							// alert("A user with this username already exists.");
+							console.log(data.imageUrl);
+							$('#branchImage').attr("src","http://127.0.0.1:8000/static/"+data.imageUrl)
+						}
+					}
+				});
+    		});
+		});
+
+		function myScroll(){
+			document.getElementById( 'about' ).scrollIntoView();
+		}
+		setTimeout(myScroll,2000);
+
+		$(document).ready(function(){
+			var time = setTimeout(getImage,3000);
+			console.log("Timer Set!")
+		});
+
+		function getMap(){
+			$.ajax({
+				url: '{% url "rest_api:getMap" %}',
+				dataType: 'json',
+				success: function (data) {
+					if (data.state == "success") {
+						var mapDivs = document.querySelectorAll(".map");
+						// console.log(mapDivs[0].querySelector('iframe').src)
+						for(var i =0; i < mapDivs.length; i++ ){
+							mapDivs[i].querySelector('iframe').src = data['map'+(i+1)];
+							if (window.getComputedStyle(mapDivs[i]).display === "none") {
+    							mapDivs[i].style.display = "block";
+ 							}
+						}
+					}
+				}
+			});
+		}
+
+		function getImage(){
+			$.ajax({
+				url: '{% url "rest_api:getImage" %}',
+				dataType: 'json',
+				success: function (data) {
+					
+					if(data.status == "success")
+						var aboutImg = document.getElementById("aboutImage");
+						var branchImage = document.getElementById("branchImage");
+						var specialImg = document.getElementById("specialImg");
+
+						aboutImg.src = data.aboutImage;
+						branchImage.src = data.branchImage;
+						specialImg.src = data.specialImage;
+
+						if (window.getComputedStyle(aboutImg).display === "none") {
+							aboutImg.style.display = "block";
+						}
+						
+						if (window.getComputedStyle(branchImage).display === "none") {
+							aboutImg.style.display = "block";
+						}
+						
+						if (window.getComputedStyle(specialImg).display === "none") {
+							aboutImg.style.display = "block";
+						}
+
+					var time = setTimeout(getMap,5000);
+				}
+			});
+		}
+
+	</script>
+
 {% endblock %}

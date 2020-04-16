@@ -58,7 +58,32 @@
 {% block ajax %}
     
     <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
-    <script type="text/javascript">
+    
+
+    <script>
+        $("#username").blur(function () {
+          var username = $(this).val();
+          console.log(username);
+    
+          $.ajax({
+            url: '{% url "rest_api:check" %}',
+            data: {
+              'username': username
+            },
+            dataType: 'json',
+            success: function (data) {
+              if (data.is_taken) {
+                // alert("A user with this username already exists.");
+                swal("Oops!", "This Username is not available!", "error");
+              }
+            }
+          });
+    
+        });
+      </script>
+{% endblock %}
+
+<!-- <script type="text/javascript">
         
         var obj = {
             xhr: new XMLHttpRequest(),
@@ -88,5 +113,4 @@
             }
         }
 
-    </script>
-{% endblock %}
+    </script> -->

@@ -22,7 +22,7 @@ def customer_login(request):
         if(user):
             if(user.is_active):
                 login(request,user)
-                return HttpResponseRedirect(reverse('menu:menu'))
+                return HttpResponseRedirect(reverse('home:personalise'))
             else:
                 return HttpResponse("User Not Active")
         
@@ -77,20 +77,25 @@ def signup(request):
     
     return render(request, 'user_auth/signup.html', {'user_form':user_form,'profile_form':profile_form,'registered':registered})
 
-def getUsers(request):
+# def getUsers(request):
 
-    username = request.GET['username']
-    users = User.objects.all().values_list('username',flat=True)
+#     username = request.GET['username']
+#     # users = User.objects.all().values_list('username',flat=True)
 
-    users = list(users)
-    # print(users)
-    # print(username)
+#     # users = list(users)
+#     # # print(users)
+#     # # print(username)
 
-    # return JsonResponse({'availability':username})s
-    # return JsonResponse({'a':users},safe=False)
+#     # # return JsonResponse({'availability':username})s
+#     # # return JsonResponse({'a':users},safe=False)
 
-    if(username in users):
-        return JsonResponse({'availability':'false'})
+#     # if(username in users):
+#     #     return JsonResponse({'availability':'false'})
     
-    else:
-        return JsonResponse({'availability':'true'})
+#     # else:
+#     #     return JsonResponse({'availability':'true'})
+#     data = {
+#         'is_taken': User.objects.filter(username__iexact=username).exists()
+#     }
+
+#     return JsonResponse(data)

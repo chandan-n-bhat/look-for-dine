@@ -5,7 +5,7 @@ from user_auth.models import Customer
 class CustomerForm(forms.ModelForm):
 
     password = forms.CharField(widget=forms.PasswordInput(attrs={'class':'input100'}))
-    username = forms.CharField(widget=forms.TextInput(attrs={'class':'input100','id':'username','onblur':'obj.checkUnameAvailable()'}))
+    username = forms.CharField(widget=forms.TextInput(attrs={'class':'input100','id':'username'}))
 
     class Meta():
         model = User

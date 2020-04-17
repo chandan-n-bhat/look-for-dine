@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+{% load static %}
+<html>
+	<head>
+        {% block title %}
+
+        {% endblock %}
+        <meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<link rel="stylesheet" href="{% static 'home/css/style.css' %}">
+		<link rel="icon" type="image/png" href='{% static "user_auth/images/icons/favicon.ico" %}'/>
+
+		<style>
+			body{
+				font-family: "Times New Roman", Georgia, Serif;
+			}
+
+			h1, h2, h3, h4, h5, h6 {
+				font-family: "Playfair Display";
+				letter-spacing: 1px;
+			}
+
+			.w3-text-grey{
+				margin-bottom: 0px;
+				padding-bottom: 0px;
+			}
+
+			.contact{
+				margin-right: 30px;;
+			}
+
+			a{
+				letter-spacing: 1px;
+            }
+
+            .auth-button{
+                background-color: rgb(148, 144, 143,0.2);
+                margin-left: 50px;
+                margin-right: 30px;
+	        }       
+            
+            strong{
+                font-size: 18px;
+            }
+		</style>
+	</head>
+
+	<body>
+
+        <div class="w3-top">
+            <div class="w3-bar w3-white w3-padding w3-card" style="letter-spacing:4px;">
+                <a href="{% url 'home:home' %}" class="w3-bar-item w3-button">Look For Dine</a>
+
+                <div class="w3-right w3-hide-small">
+                    <a href="{% url 'home:home' %}" class="w3-bar-item w3-button">About</a>
+                    <a href="{% url 'menu:menu' %}" class="w3-bar-item w3-button">Menu</a>
+                    <a href="{% url 'book:reserve' %}" class="w3-bar-item w3-button">Reserve</a>
+                    <a href="{% url 'book:status' %}" class="w3-bar-item w3-button">Status</a>
+
+                    {% if user.is_authenticated %}
+                        <a href="{% url 'user_auth:logout' %}" class="w3-bar-item w3-button auth-button">Logout</a>
+                    {% else %}
+                        <a href="{% url 'user_auth:login' %}" class="w3-bar-item w3-button auth-button">Login</a>
+                    {% endif %}
+
+                </div>
+            </div>
+        </div>
+
+        {% block content %}
+        
+        {% endblock %}
+
+        <!-- Footer -->
+        <footer class="w3-center w3-light-grey w3-padding-32">
+            <p>Serving Your Stomach since 1999</p>
+        </footer>
+
+        {% block ajax %}
+
+        {% endblock %}
+
+	</body>
+</html>

@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     'user_auth',
     'menu',
     'home',
+    'book',
     'rest_api',
 ]
 

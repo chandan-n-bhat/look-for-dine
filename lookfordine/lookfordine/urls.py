@@ -26,6 +26,7 @@ urlpatterns = [
     path('', include('home.urls')),
     path('auth/', include('user_auth.urls')),
     path('menu/', include('menu.urls')),
+    path('book/', include('book.urls')),
     path('api/', include('rest_api.urls')),
 
 ]

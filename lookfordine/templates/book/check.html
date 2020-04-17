@@ -1,0 +1,69 @@
+{% extends 'book/base.html' %}
+{% load static %}
+
+{% block title %}
+	<title>Check Reservations</title>
+
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
+
+	<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+	
+	<style>
+
+		.jumbotron{
+			margin-top: 20px;
+		}
+
+		html,body{
+			height: 100%;
+			background-color: #f7f7f7;
+		}
+
+		.list-group-item{
+			margin: 10px auto;
+		}
+		
+	</style>
+{% endblock %}
+
+
+{% block content %}
+
+	<div class="jumbotron text-center">
+		<h1>Thank you for Reserving!</h1>
+		<p>Our Pleasure to serve you!</p>
+	</div>
+
+	<div class="container mt-3">
+		<div class="row">
+			<div class="col" style="text-align: center;">
+				<h3 style="text-align: center;">You Reservations!</h3>
+
+				{%if reservations %}
+					{% for r in reservations %}
+					
+					<div style="margin: 10px auto;padding: 5px;">
+
+						<li class="list-group-item" style="width: 70%;text-align: center;">Booked by: {{ r.name }}</li>
+						<li class="list-group-item" style="width: 70%;text-align: center;">Place: {{ r.branch }}</li>
+						<li class="list-group-item" style="width: 70%;text-align: center;">Head Count: {{ r.people }}</li>
+						<li class="list-group-item" style="width: 70%;text-align: center;">Date: {{ r.datetime }}</li>
+						<li class="list-group-item" style="width: 70%;text-align: center;">Special Requirements: {{ r.message }}</li>
+					
+					</div>
+					<hr>
+					{% endfor %}
+
+				{% else %}
+
+				{% endif %}
+			
+			</div>
+		</div>
+	</div>
+			
+		
+{% endblock %}

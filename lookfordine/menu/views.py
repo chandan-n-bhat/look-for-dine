@@ -94,7 +94,8 @@ def showMenu(request):
                 {'list':curry_list,'type':'Currys'},
                 {'list':dessert_list,'type':'Desserts'},
                 {'list':chat_list,'type':'Chats'},
-                {'list':meal_list,'type':'Meals'}
+                {'list':meal_list,'type':'Meals'},
+                {'list':drink_list,'type':'Drinks'}
             ],
             'recommend_list':recommend
         }

@@ -126,6 +126,26 @@
 
 		{% if user.is_authenticated %}
 
+			<div class="w3-row w3-padding-16">
+				<div class="w3-col m12">
+					<h1 class="w3-center" style="margin: 0;padding: 0;text-decoration: underline;">Some Picks for You</h1>
+					<div class="w3-row-padding" style="margin: 5%">
+						{% for r in recommend_list %}
+							<div class="w3-col l3 m6 w3-margin-bottom alter" id="{{ menu.cuisineName }}">
+								<img src="{% static r.photo %}" class="lazy" width="100%">
+								<h3 style="margin-top: 30px;">{{ r.cuisineName }} <span id="price">Rs {{ r.price }}</span></h3>
+								<h4 class="w3-opacity">Calories : {{ r.calories }}</h4>
+								
+								<span style="font-size: medium;"><strong>Tags&nbsp;&nbsp;</strong></span>
+								{% for tag in r.tags %}
+									<span id="tag">{{tag}}</span>
+								{% endfor %}
+							</div>
+						{% endfor %}
+					</div>
+				</div>
+			</div>
+
 			{% for cat in menu_list %}
 
 				<div class="w3-row w3-padding-16">
@@ -146,7 +166,6 @@
 								</div>
 							{% endfor %}
 						</div>
-						
 					</div>
 				</div>
 			

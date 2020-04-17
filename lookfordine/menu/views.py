@@ -1,8 +1,10 @@
 from django.shortcuts import render
 from django.http import HttpResponse, JsonResponse, HttpResponseRedirect
 from menu.models import Menu
+from user_auth.models import Customer
 import requests
 from django.contrib.auth.decorators import login_required
+
 
 
 # Create your views here.
@@ -65,6 +67,21 @@ def showMenu(request):
 
             else:
                 pass
+        
+        cuser = Customer.objects.get(user=request.user)
+        recommend_list = cuser.personalised_menu
+        print(recommend_list)
+        recommend = []
+
+        for i in recommend_list:
+            # print(i,type(i))
+            try:
+                object = Menu.objects.get(cuisineName=i)
+                recommend.append(object)
+            except:
+                pass
+        
+        print(recommend)
 
         context = {
             'menu_list':[
@@ -78,8 +95,8 @@ def showMenu(request):
                 {'list':dessert_list,'type':'Desserts'},
                 {'list':chat_list,'type':'Chats'},
                 {'list':meal_list,'type':'Meals'}
-
-            ]
+            ],
+            'recommend_list':recommend
         }
         return render(request,'menu/menu.html',context)
     else:

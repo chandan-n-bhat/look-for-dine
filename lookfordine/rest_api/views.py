@@ -3,10 +3,8 @@ from django.http import HttpResponse, JsonResponse, HttpResponseRedirect
 import json
 from django.apps import apps
 from django.views.decorators.csrf import csrf_exempt
-
 from django.contrib.auth.models import User
 import numpy as np
-
 
 # Create your views here.
 

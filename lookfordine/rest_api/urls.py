@@ -1,5 +1,6 @@
-from django.urls import path
 from rest_api import views as rest_views
+from django.urls import path
+
 
 app_name = 'rest_api'
 

@@ -12,6 +12,7 @@ import numpy as np
 def readDb(request):
 
     json_body = json.loads(request.body)
+    # json_body = request.body
 
     if(request.method == 'POST'):
         operation = json_body['operation']

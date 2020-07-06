@@ -1,0 +1,13 @@
+version: '3'
+
+services:
+    lookfordine:
+        build: .
+        image: lfd:latest
+        command: bash -c "python manage.py makemigrations && python manage.py migrate && python manage.py runserver 0.0.0.0:8000"
+        container_name: lookfordine
+        volumes:
+            - .:/code
+        ports:
+            - "8000:8000"
+        restart: on-failure
